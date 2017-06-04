@@ -192,7 +192,6 @@ var _theta_gl = function() {
     else {
       videoRenderElement.style.visibility = 'hidden';
     }
-    videoRenderElement.volume = 0;
     document.body.appendChild(videoRenderElement);
     
     // canvas to convert
