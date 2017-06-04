@@ -157,6 +157,7 @@ var _theta_gl = function() {
 
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.domElement.addEventListener('click', () => requestFullScreen(renderer.domElement), false);
+    // renderer.domElement.addEventListener('touchstart', () => requestFullScreen(renderer.domElement), false);
 
     stereoEffect = new THREE.StereoEffect(renderer);
     stereoEffect.eyeSeparation = 10;
