@@ -13,10 +13,12 @@ skylink.on('incomingStream', (peerId, stream, isSelf) => {
     const url = URL.createObjectURL(stream);
     THETA_GL.setVideoSrc(url);
     THETA_GL.startAnimate();
+    THETA_GL.followOrientation(true);
 });
 
 skylink.on('peerLeft', (peerId) => {
     THETA_GL.stopVideoSrc();
+    THETA_GL.followOrientation(false);
 });
 
 skylink.init({

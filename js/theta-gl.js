@@ -11,7 +11,7 @@ var _theta_gl = function() {
   var self = this;
   
   // -- member --
-  var camera, scene, renderer, stereoEffect;
+  var camera, scene, renderer, stereoEffect, controls;
   var videoImage, videoImageContext, videoTexture;
   var videoRenderElement;
   
@@ -72,8 +72,8 @@ var _theta_gl = function() {
   //
   this.init = function(divId, autoResize, debugFlag) {
     var container, mesh;
-    var winWidth = 30*16;
-    var winHeight = 30*9;
+    var winWidth = 80*16;
+    var winHeight = 80*9;
 
     debugMode = debugFlag;
     prepareVideoElements(debugFlag);
@@ -84,10 +84,12 @@ var _theta_gl = function() {
 
     // camera
     camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 100);
-    camera.target = new THREE.Vector3( 0, 0, 0 );
+    //camera.target = new THREE.Vector3( 0, 0, 0 );
     //camera.fov = 60; // zoom out
-    camera.fov = 45; // zoom out
-    camera.zoom = 0.8;
+    //camera.fov = 45; // zoom out
+    //camera.zoom = 0.8;
+    controls = new THREE.DeviceOrientationControls(camera);
+
     var light = new THREE.AmbientLight(0xffffff);
     light.position.set(0, 0, 0).normalize();
     scene = new THREE.Scene();
@@ -236,17 +238,20 @@ var _theta_gl = function() {
     var orientation = event.alpha; // 0 to 360
     var pitch = event.beta; // -90 to 90
     var roll= event.gamma;  // -90 to 270
+    document.getElementById('alpha').innerText = event.alpha;
+    document.getElementById('beta').innerText = event.beta;
+    document.getElementById('gamma').innerText = event.gamma;
 
     lon = -orientation;
     lat = pitch - 90;
   }
 
   function addOrientationEvent() {
-    window.addEventListener("deviceorientation", followOrientation, false);
+    //window.addEventListener("deviceorientation", followOrientation, false);
   }
 
   function removeOrientationEvent() {
-    window.removeEventListener("deviceorientation", followOrientation, false);
+    //window.removeEventListener("deviceorientation", followOrientation, false);
   }
 
   function onDocumentMouseDown(event) {
@@ -392,11 +397,11 @@ var _theta_gl = function() {
     //camera.target.y = 500 * Math.cos( phi );
     //camera.target.z = 500 * Math.sin( phi ) * Math.sin( theta );
 
-    camera.target.x = Math.sin(phi) * Math.cos(theta);
-    camera.target.y = Math.cos(phi);
-    camera.target.z = Math.sin(phi) * Math.sin(theta);
+    //camera.target.x = Math.sin(phi) * Math.cos(theta);
+    //camera.target.y = Math.cos(phi);
+    //camera.target.z = Math.sin(phi) * Math.sin(theta);
 
-    camera.lookAt( camera.target );
+    //camera.lookAt( camera.target );
 
     // video to image
     videoImageContext.drawImage( videoRenderElement, 0, 0, videoImage.width, videoImage.height );
@@ -404,7 +409,7 @@ var _theta_gl = function() {
       videoTexture.needsUpdate = true;
     }
 
-
+    controls.update();
     stereoEffect.render( scene, camera );
   }
 
