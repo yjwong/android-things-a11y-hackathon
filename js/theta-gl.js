@@ -11,7 +11,7 @@ var _theta_gl = function() {
   var self = this;
   
   // -- member --
-  var camera, scene, renderer;
+  var camera, scene, renderer, stereoEffect;
   var videoImage, videoImageContext, videoTexture;
   var videoRenderElement;
   
@@ -37,14 +37,12 @@ var _theta_gl = function() {
     videoRenderElement.loop = loopFlag;
     videoRenderElement.src = url;
     videoRenderElement.autoplay = true;
-    videoRenderElement.play();
   }
 
   //
   // stop Video Source
   //
   this.stopVideoSrc = function() {
-    videoRenderElement.pause();
     videoRenderElement.src = "";
     videoImageContext.clearRect(0, 0, videoImage.width, videoImage.height);
   }
@@ -156,7 +154,11 @@ var _theta_gl = function() {
     });
 
     renderer.setPixelRatio( window.devicePixelRatio );
-    renderer.setSize( winWidth, winHeight );
+
+    stereoEffect = new THREE.StereoEffect(renderer);
+    stereoEffect.eyeSeparation = 10;
+    stereoEffect.setSize(winWidth, winHeight);
+
     container.appendChild( renderer.domElement );
 
     container.addEventListener( 'mousedown', onDocumentMouseDown, false );
@@ -222,7 +224,7 @@ var _theta_gl = function() {
     var winHeight = window.innerHeight;
     camera.aspect = winWidth / winHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize( winWidth, winHeight )
+    stereoEffect.setSize( winWidth, winHeight )
   }
 
   function followOrientation(event) {
@@ -398,7 +400,7 @@ var _theta_gl = function() {
     }
 
 
-    renderer.render( scene, camera );
+    stereoEffect.render( scene, camera );
   }
 
 };
