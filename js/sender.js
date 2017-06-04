@@ -40,9 +40,4 @@ skylink.joinRoom({
     }
 });
 
-skylink.muteStream({
-    audio: false,
-    video: false
-});
-
 THETA_GL.init('container', true);
