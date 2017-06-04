@@ -182,6 +182,9 @@ var _theta_gl = function() {
   function prepareVideoElements(debugFlag) {
     // video element to render 
     videoRenderElement = document.createElement('video');
+    // videoRenderElement.id = 'test';
+    // var videoElement = document.getElementById('videoRenderElement');    
+    // videoElement.webkitRequestFullScreen();
     videoRenderElement.width = 1280;
     videoRenderElement.height = 720;
     if (debugFlag) {
