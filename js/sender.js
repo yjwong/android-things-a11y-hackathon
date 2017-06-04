@@ -3,19 +3,16 @@ const skylink = new Skylink();
 skylink.setLogLevel(1);
 
 skylink.on('peerJoined', (peerId, peerInfo, isSelf) => {
+    console.log('peerJoined', peerId, peerInfo, isSelf);
     if (isSelf) { return; }
-    console.log('Peer joined');
 });
 
 skylink.on('incomingStream', (peerId, stream, isSelf) => {
+    console.log('incomingStream', peerId, stream, isSelf);
     if (!isSelf) { return; }
     const url = URL.createObjectURL(stream);
     THETA_GL.setVideoSrc(url);
     THETA_GL.startAnimate();
-});
-
-skylink.on('peerLeft', (peerId) => {
-    THETA_GL.stopVideoSrc();
 });
 
 skylink.init({
