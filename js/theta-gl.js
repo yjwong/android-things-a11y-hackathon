@@ -36,6 +36,7 @@ var _theta_gl = function() {
   this.setVideoSrc = function(url, loopFlag) {
     videoRenderElement.loop = loopFlag;
     videoRenderElement.src = url;
+    videoRenderElement.autoplay = true;
     videoRenderElement.play();
   }
 
