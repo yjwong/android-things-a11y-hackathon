@@ -1,4 +1,5 @@
 'use strict';
+
 const skylink = new Skylink();
 skylink.setLogLevel(1);
 

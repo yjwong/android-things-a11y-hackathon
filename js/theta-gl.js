@@ -154,6 +154,7 @@ var _theta_gl = function() {
     });
 
     renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.domElement.addEventListener('click', () => requestFullScreen(renderer.domElement), false);
 
     stereoEffect = new THREE.StereoEffect(renderer);
     stereoEffect.eyeSeparation = 10;
@@ -182,11 +183,9 @@ var _theta_gl = function() {
   function prepareVideoElements(debugFlag) {
     // video element to render 
     videoRenderElement = document.createElement('video');
-    // videoRenderElement.id = 'test';
-    // var videoElement = document.getElementById('videoRenderElement');    
-    // videoElement.webkitRequestFullScreen();
     videoRenderElement.width = 1280;
     videoRenderElement.height = 720;
+    var isFullscreenAvailable = document.webkitFullscreenEnabled;
     if (debugFlag) {
       videoRenderElement.style.visibility = 'true';
       videoRenderElement.style.position = 'absolute';
@@ -202,6 +201,8 @@ var _theta_gl = function() {
     // canvas to convert
     videoImage =  document.createElement('canvas');
 
+    // console.log('isFullscreenAvailable', document.webkitFullscreenEnabled);
+
     if (debugFlag) {
       videoImage.style.visibility = 'true';
       videoImage.style.position = 'absolute';
@@ -216,6 +217,7 @@ var _theta_gl = function() {
       videoImage.height = 720;
     }
     document.body.appendChild(videoImage);
+
     
     // context
     videoImageContext = videoImage.getContext('2d');
@@ -410,3 +412,13 @@ var _theta_gl = function() {
 
 // Global Instance for THETA_GL.js
 var THETA_GL = new _theta_gl();
+
+
+function requestFullScreen(domElement) {
+  console.log('requestFullScreen');
+  if (document.webkitFullscreenEnabled) {
+    domElement.webkitRequestFullScreen();
+  } else {
+    console.log('Your browser cannot use fullscreen right now');
+  }
+}
